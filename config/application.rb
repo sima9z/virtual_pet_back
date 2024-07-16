@@ -26,5 +26,9 @@ module App
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
     config.i18n.default_locale = :ja
+
+    # セッションミドルウェアの追加
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_my_app_session'
   end
 end
