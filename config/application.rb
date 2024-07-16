@@ -30,5 +30,8 @@ module App
     # セッションミドルウェアの追加
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_my_app_session'
+
+    config.hosts << "back-patient-lake-2960.fly.dev"
+    config.hosts << "virtual-pet-front.vercel.app"
   end
 end
