@@ -9,9 +9,9 @@ class ApplicationController < ActionController::Base
   private
 
   def set_cors_headers
-    response.set_header('Access-Control-Allow-Origin', 'https://virtual-pet-front.vercel.app')
-    response.set_header('Access-Control-Allow-Credentials', 'true')
-    response.set_header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD')
-    response.set_header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, Token')
+    headers['Access-Control-Allow-Origin'] = 'https://virtual-pet-front.vercel.app'
+    headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD'
+    headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token'
+    headers['Access-Control-Allow-Credentials'] = 'true'
   end
 end
