@@ -11,13 +11,21 @@ class ApplicationController < ActionController::Base
   private
 
   def set_csrf_cookie
-    cookies['CSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+    cookies['CSRF-TOKEN'] = {
+      value: form_authenticity_token,
+      secure: Rails.env.production?,
+      same_site: :strict
+    } if protect_against_forgery?
   end
 
   protected
 
   def verified_request?
-    super || form_authenticity_token == request.headers['X-CSRF-Token']
+    super || valid_csrf_token?
   end
 
+  def valid_csrf_token?
+    request.headers['X-CSRF-Token'] == form_authenticity_token ||
+      request.headers['X-CSRF-Token'] == session[:_csrf_token]
+  end
 end
