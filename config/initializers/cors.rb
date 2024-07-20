@@ -12,7 +12,6 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     resource "*",
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
-      expose: ['XSRF-TOKEN'],
       credentials: true # セッション管理のためにcredentialsをtrueに設定
   end
 end
