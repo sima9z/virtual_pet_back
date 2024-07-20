@@ -33,16 +33,8 @@ module App
 
     config.hosts << "back-patient-lake-2960.fly.dev"
     config.hosts << "virtual-pet-front.vercel.app"
-
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins 'localhost:8000', '127.0.0.1:8000', 'https://virtual-pet-front.vercel.app'
-        resource "*",
-          headers: :any,
-          methods: [:get, :post, :put, :patch, :delete, :options, :head],
-          credentials: true
-      end
-    end
+    
+    config.action_controller.forgery_protection_origin_check = false
 
   end
 end
