@@ -25,7 +25,8 @@ class ApplicationController < ActionController::Base
   end
 
   def valid_csrf_token?
-    request.headers['X-CSRF-Token'] == form_authenticity_token ||
-      request.headers['X-CSRF-Token'] == session[:_csrf_token]
+    request.headers['X-CSRF-Token'].present? &&
+      (request.headers['X-CSRF-Token'] == form_authenticity_token ||
+      request.headers['X-CSRF-Token'] == session[:_csrf_token])
   end
 end
