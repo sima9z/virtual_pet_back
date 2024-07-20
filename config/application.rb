@@ -36,5 +36,6 @@ module App
     
     config.action_controller.forgery_protection_origin_check = false
 
+    config.action_dispatch.trusted_proxies = ['127.0.0.1', '::1', '66.241.124.136','2a09:8280:1::3b:86e2:0']
   end
 end
