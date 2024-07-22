@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     Rails.logger.debug "Token matches form token: #{compare_form_token}"
     compare_session_token = ActiveSupport::SecurityUtils.secure_compare(token.to_s, session_token.to_s)
     Rails.logger.debug "Token matches session token: #{compare_session_token}"
-    
+
     token_present && (compare_form_token || compare_session_token)
   end
 end
