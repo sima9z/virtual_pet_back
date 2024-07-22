@@ -1,4 +1,5 @@
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
+  include ActionController::RequestForgeryProtection
   protect_from_forgery with: :exception
 
   def csrf_token
