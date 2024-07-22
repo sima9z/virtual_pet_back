@@ -29,7 +29,7 @@ module App
 
     # セッションミドルウェアの追加
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, key: '_my_app_session'
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_my_app_session', same_site: :none, secure: Rails.env.production?
 
     config.hosts << "back-patient-lake-2960.fly.dev"
     config.hosts << "virtual-pet-front.vercel.app"
@@ -37,5 +37,6 @@ module App
     config.action_controller.forgery_protection_origin_check = false
 
     config.action_dispatch.trusted_proxies = ['127.0.0.1', '::1', '66.241.124.136','2a09:8280:1::3b:86e2:0']
+
   end
 end

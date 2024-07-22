@@ -1,22 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  # CSRFトークンをヘッダーに含める
-  after_action :set_csrf_cookie
-
+  # CSRFトークンを生成して返すエンドポイント
   def csrf_token
+    Rails.logger.debug "Session ID (csrf_token): #{session.id}"
+    Rails.logger.debug "CSRF Token (csrf_token): #{form_authenticity_token}"
     render json: { csrfToken: form_authenticity_token }
-  end
-
-  private
-
-  def set_csrf_cookie
-    Rails.logger.debug "CSRF Token generated: #{form_authenticity_token}"
-    cookies['CSRF-TOKEN'] = {
-      value: form_authenticity_token,
-      secure: Rails.env.production?,
-      same_site: :none
-    } if protect_against_forgery?
   end
 
   protected
@@ -27,8 +16,11 @@ class ApplicationController < ActionController::Base
 
   def valid_csrf_token?
     token = request.headers['X-CSRF-Token']
+    session_token = session[:_csrf_token]
     Rails.logger.debug "CSRF Token from request: #{token}"
-    Rails.logger.debug "CSRF Token from session: #{session[:_csrf_token]}"
-    token.present? && (token == form_authenticity_token || token == session[:_csrf_token])
+    Rails.logger.debug "Session ID (valid_csrf_token): #{session.id}"
+    Rails.logger.debug "CSRF Token from session: #{session_token}"
+    ActiveSupport::SecurityUtils.secure_compare(token.to_s, form_authenticity_token.to_s) ||
+      ActiveSupport::SecurityUtils.secure_compare(token.to_s, session_token.to_s)
   end
 end
