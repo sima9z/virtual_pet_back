@@ -6,6 +6,7 @@ class UserSessionsController < ApplicationController
     if user
       render json: { user: user }, status: :ok
     else
+      Rails.logger.debug "Invalid email or password for email: #{params[:email]}"
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
   end
