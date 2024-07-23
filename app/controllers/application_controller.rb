@@ -3,5 +3,4 @@ class ApplicationController < ActionController::Base
 
   # CSRFトークンの検証をスキップ
   skip_before_action :verify_authenticity_token
-
 end
