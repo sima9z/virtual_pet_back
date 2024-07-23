@@ -43,9 +43,7 @@ module App
     config.middleware.use ActionDispatch::Session::RedisStore, {
       servers: [
         {
-          host: "redis", # Docker Composeのサービス名
-          port: 6379,
-          db: 0,
+          url: Rails.application.config_for(:redis)[:url],
           namespace: "session"
         },
       ],
