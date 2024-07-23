@@ -6,4 +6,16 @@ Rails.application.routes.draw do
   post 'signup', to: 'users#create'
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
+
+  resources :users
+  resource :dog do
+    member do
+      post 'feed'
+      post 'water'
+      post 'walk'
+      post 'update_state'
+    end
+  end
+
+  get '/check_pets', to: 'pets#check_pets'
 end
