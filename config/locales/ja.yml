@@ -1,0 +1,19 @@
+ja:
+  hello: "こんにちは"
+  activerecord:
+    models:
+      user: "ユーザー"
+    attributes:
+      user:
+        name: "名前"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード確認"
+    errors:
+      messages:
+        record_invalid: "検証に失敗しました。"
+        taken: "は既に存在します"
+        blank: "を入力してください"
+        too_short: "は%{count}文字以上で入力してください"
+        too_long: "は%{count}文字以内で入力してください"
+        invalid: "は不正な値です"

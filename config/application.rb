@@ -1,6 +1,16 @@
 require_relative "boot"
 
 require "rails/all"
+# Pick the frameworks you want:
+require "active_model/railtie"
+require "active_job/railtie"
+require "active_record/railtie"
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "action_view/railtie"
+require "action_cable/engine"
+# require "sprockets/railtie"
+require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -26,10 +36,24 @@ module App
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
     config.i18n.default_locale = :ja
+    config.i18n.available_locales = [:en, :ja]
 
     # セッションミドルウェアの追加
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, key: '_my_app_session'
+    config.middleware.use ActionDispatch::Session::RedisStore, {
+      servers: [
+        {
+          host: "redis", # Docker Composeのサービス名
+          port: 6379,
+          db: 0,
+          namespace: "session"
+        },
+      ],
+      expire_after: 90.minutes,
+      key: "_#{Rails.application.class.module_parent_name.downcase}_session",
+      threadsafe: false,
+      secure: Rails.env.production?
+    }
 
     config.hosts << "back-patient-lake-2960.fly.dev"
     config.hosts << "virtual-pet-front.vercel.app"

@@ -17,6 +17,9 @@ gem "puma", "~> 5.0"
 
 gem 'sorcery'
 
+gem 'redis'
+gem 'redis-rails'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

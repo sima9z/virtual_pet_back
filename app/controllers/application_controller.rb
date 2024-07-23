@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::API
+  include ActionController::Cookies
   include ActionController::RequestForgeryProtection
+  
   protect_from_forgery with: :exception
 
   before_action :require_login
@@ -8,10 +10,7 @@ class ApplicationController < ActionController::API
   skip_before_action :verify_authenticity_token
 
   def not_authenticated
-    respond_to do |format|
-      format.html { redirect_to login_path, alert: "Please login first" }
-      format.json { render json: { message: "Please login first" }, status: :unauthorized }
-    end
+    render json: { message: "Please login first" }, status: :unauthorized
   end
 
 end

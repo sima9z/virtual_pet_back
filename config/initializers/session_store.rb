@@ -1,1 +1,8 @@
-Rails.application.config.session_store :cookie_store, key: '_my_app_session', same_site: :lax, secure: Rails.env.production?
+Rails.application.config.session_store :redis_store, servers: [
+  {
+    host: "redis", # Docker Composeのサービス名
+    port: 6379,
+    db: 0,
+    namespace: "session"
+  },
+], expire_after: 90.minutes, key: "_#{Rails.application.class.module_parent_name.downcase}_session"
