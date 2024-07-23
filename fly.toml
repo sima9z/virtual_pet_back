@@ -26,3 +26,6 @@ console_command = '/rails/bin/rails console'
 [[statics]]
   guest_path = '/app/public'
   url_prefix = '/'
+
+[env]
+  REDIS_URL = "redis://redis:6379/0"
