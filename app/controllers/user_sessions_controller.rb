@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
   skip_before_action :require_login, only: [:create]
-  
+
   def create
     user = login(params[:email], params[:password])
     if user
@@ -12,6 +12,7 @@ class UserSessionsController < ApplicationController
 
   def destroy
     logout
+    cookies.delete(:remember_token)
     render json: { message: 'Logged out' }, status: :ok
   end
 
