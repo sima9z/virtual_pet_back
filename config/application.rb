@@ -43,7 +43,7 @@ module App
     config.middleware.use ActionDispatch::Session::RedisStore, {
       servers: [
         {
-          url: Rails.application.config_for(:redis)[:url],
+          url: ENV['REDIS_URL'],
           namespace: "session"
         },
       ],
@@ -59,6 +59,7 @@ module App
     config.action_controller.forgery_protection_origin_check = false
 
     puts "Redis URL: #{ENV['REDIS_URL']}"
+    Rails.logger.debug "Redis URL: #{Rails.application.config_for(:redis)[:url]}"
 
   end
 end
