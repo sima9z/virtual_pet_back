@@ -58,5 +58,7 @@ module App
     
     config.action_controller.forgery_protection_origin_check = false
 
+    puts "Redis URL: #{ENV['REDIS_URL']}"
+
   end
 end
