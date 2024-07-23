@@ -58,8 +58,10 @@ module App
     
     config.action_controller.forgery_protection_origin_check = false
 
-    puts "Redis URL: #{ENV['REDIS_URL']}"
-    Rails.logger.debug "Redis URL: #{Rails.application.config_for(:redis)[:url]}"
+    config.after_initialize do
+      puts "Redis URL: #{ENV['REDIS_URL']}"
+      Rails.logger.debug "Redis URL: #{Rails.application.config_for(:redis)[:url]}"
+    end
 
   end
 end
