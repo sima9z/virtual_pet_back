@@ -60,7 +60,11 @@ module App
     
     config.action_controller.forgery_protection_origin_check = false
 
-    config.action_dispatch.trusted_proxies = ['127.0.0.1', '::1', '66.241.124.136','2a09:8280:1::3b:86e2:0']
+    config.action_dispatch.trusted_proxies = [
+      '127.0.0.1', '::1',
+      IPAddr.new('0.0.0.0/0'), # IPv4の全範囲
+      IPAddr.new('::/0')       # IPv6の全範囲
+    ]
 
     config.after_initialize do
       Rails.logger.debug "Redis URL from ENV: #{ENV['REDIS_URL']}"
