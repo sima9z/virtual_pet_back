@@ -11,4 +11,8 @@ class User < ApplicationRecord
 
   # Sorceryのremember_me機能を利用するための設定
   attr_accessor :remember_me_token, :remember_me_token_expires_at
+
+  def remember_me_for
+    7.days
+  end
 end

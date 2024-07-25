@@ -84,4 +84,12 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'], namespace: 'cache' }
+  config.session_store :redis_store, servers: [
+    {
+      url: ENV['REDIS_URL'],
+      namespace: "session"
+    },
+  ], expire_after: 90.minutes, key: "_#{Rails.application.class.module_parent_name.downcase}_session", secure: Rails.env.production?
+
 end

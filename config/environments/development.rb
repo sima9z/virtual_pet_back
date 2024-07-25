@@ -62,4 +62,11 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'], namespace: 'cache' }
+  config.session_store :redis_store, servers: [
+    {
+      url: ENV['REDIS_URL'],
+      namespace: "session"
+    },
+  ], expire_after: 90.minutes, key: "_#{Rails.application.class.module_parent_name.downcase}_session"
 end
