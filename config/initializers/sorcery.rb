@@ -233,7 +233,7 @@ Rails.application.config.sorcery.configure do |config|
   # config.discord.secret = "xxxxxx"
   # config.discord.callback_url = "http://localhost:3000/oauth/callback?provider=discord"
   # config.discord.scope = "email guilds"
-
+  
   # For information about Battlenet API
   # https://develop.battle.net/documentation/guides/using-oauth
   # config.battlenet.site = "https://eu.battle.net/" #See Website for other Regional Domains
@@ -242,6 +242,7 @@ Rails.application.config.sorcery.configure do |config|
   # config.battlenet.callback_url = "http://localhost:3000/oauth/callback?provider=battlenet"
   # config.battlenet.scope = "openid"
   # --- user config ---
+
   config.user_config do |user|
     user.username_attribute_names = [:email]
     # -- core --
@@ -249,7 +250,10 @@ Rails.application.config.sorcery.configure do |config|
     # Default: `[:email]`
     #
     # user.username_attribute_names =
+    user.remember_me_token_attribute_name = :remember_me_token
+    user.remember_me_token_expires_at_attribute_name = :remember_me_token_expires_at
 
+    
     # Change *virtual* password attribute, the one which is used until an encrypted one is generated.
     # Default: `:password`
     #

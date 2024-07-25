@@ -81,6 +81,10 @@ GEM
       reline (>= 0.3.8)
     dockerfile-rails (1.6.17)
       rails (>= 3.0.0)
+    dotenv (3.1.2)
+    dotenv-rails (3.1.2)
+      dotenv (= 3.1.2)
+      railties (>= 6.1)
     erubi (1.13.0)
     faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
@@ -233,6 +237,7 @@ DEPENDENCIES
   bootsnap
   debug
   dockerfile-rails (>= 1.6)
+  dotenv-rails
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors

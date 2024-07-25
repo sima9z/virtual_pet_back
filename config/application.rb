@@ -16,6 +16,8 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+Dotenv::Rails.load
+
 module App
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -59,7 +61,7 @@ module App
     config.action_controller.forgery_protection_origin_check = false
 
     config.after_initialize do
-      puts "Redis URL: #{ENV['REDIS_URL']}"
+      Rails.logger.debug "Redis URL from ENV: #{ENV['REDIS_URL']}"
       Rails.logger.debug "Redis URL: #{Rails.application.config_for(:redis)[:url]}"
     end
 
