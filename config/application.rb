@@ -60,6 +60,8 @@ module App
     
     config.action_controller.forgery_protection_origin_check = false
 
+    config.action_dispatch.trusted_proxies = ['127.0.0.1', '::1', '66.241.124.136','2a09:8280:1::3b:86e2:0']
+
     config.after_initialize do
       Rails.logger.debug "Redis URL from ENV: #{ENV['REDIS_URL']}"
       Rails.logger.debug "Redis URL: #{Rails.application.config_for(:redis)[:url]}"

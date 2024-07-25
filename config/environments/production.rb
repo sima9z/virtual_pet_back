@@ -92,4 +92,6 @@ Rails.application.configure do
     },
   ], expire_after: 90.minutes, key: "_#{Rails.application.class.module_parent_name.downcase}_session", secure: Rails.env.production?
 
+  config.action_controller.forgery_protection_origin_check = true
+  
 end
