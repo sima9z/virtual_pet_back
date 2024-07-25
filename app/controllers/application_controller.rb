@@ -23,7 +23,7 @@ class ApplicationController < ActionController::API
     cookies['CSRF-TOKEN'] = {
       value: form_authenticity_token,
       secure: Rails.env.production?,
-      same_site: :strict
+      same_site: :none
     } if protect_against_forgery?
   end
 
@@ -35,6 +35,8 @@ class ApplicationController < ActionController::API
 
   def valid_csrf_token?
     token = request.headers['X-CSRF-Token']
+    Rails.logger.debug "CSRF Token from request: #{token}"
+    Rails.logger.debug "CSRF Token from session: #{session[:_csrf_token]}"
     token.present? && valid_authenticity_token?(session, token)
   end
 
