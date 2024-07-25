@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post 'signup', to: 'users#create'
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
+  get 'csrf_token', to: 'application#csrf_token'
 
   resources :users
   resource :dog do

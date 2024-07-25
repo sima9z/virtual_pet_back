@@ -2,6 +2,7 @@ class UserSessionsController < ApplicationController
   skip_before_action :require_login
 
   def create
+    Rails.logger.debug "Entering UserSessionsController#create"
     user = login(params[:email], params[:password])
     if user
       render json: { user: user }, status: :ok
