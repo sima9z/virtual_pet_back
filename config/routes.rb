@@ -19,4 +19,6 @@ Rails.application.routes.draw do
   end
 
   get '/check_pets', to: 'pets#check_pets'
+
+  get '/health_check', to: 'application#health_check'
 end
