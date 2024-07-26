@@ -10,7 +10,9 @@ class ApplicationController < ActionController::API
   after_action :set_csrf_cookie
 
   def csrf_token
-    render json: { csrfToken: form_authenticity_token }
+    csrf_token_value = form_authenticity_token
+    Rails.logger.debug "Generated CSRF Token: #{csrf_token_value}"
+    render json: { csrfToken: csrf_token_value }
   end
 
   def not_authenticated
@@ -26,6 +28,7 @@ class ApplicationController < ActionController::API
       same_site: :none
     } if protect_against_forgery?
     response.headers['X-CSRF-Token'] = form_authenticity_token
+    Rails.logger.debug "Set CSRF Token in cookie and header: #{csrf_token_value}"
   end
 
   protected
