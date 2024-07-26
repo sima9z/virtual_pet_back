@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   
   protect_from_forgery with: :exception
 
-  before_action :require_login, except: [:csrf_token, :health_check] # csrf_tokenアクションを除外
+  before_action :require_login, except: [:csrf_token] # csrf_tokenアクションを除外
 
   # CSRFトークンをヘッダーに含める
   after_action :set_csrf_cookie
@@ -15,10 +15,6 @@ class ApplicationController < ActionController::API
 
   def not_authenticated
     render json: { message: "Please login first" }, status: :unauthorized
-  end
-
-  def health_check
-    render plain: 'OK', status: :ok
   end
 
   private
