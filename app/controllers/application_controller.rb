@@ -22,12 +22,13 @@ class ApplicationController < ActionController::API
   private
 
   def set_csrf_cookie
+    csrf_token_value = form_authenticity_token
     cookies['CSRF-TOKEN'] = {
-      value: form_authenticity_token,
+      value: csrf_token_value,
       secure: Rails.env.production?,
       same_site: :none
     } if protect_against_forgery?
-    response.headers['X-CSRF-Token'] = form_authenticity_token
+    response.headers['X-CSRF-Token'] = csrf_token_value
     Rails.logger.debug "Set CSRF Token in cookie and header: #{csrf_token_value}"
   end
 
