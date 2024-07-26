@@ -17,6 +17,10 @@ class ApplicationController < ActionController::API
     render json: { message: "Please login first" }, status: :unauthorized
   end
 
+  def health_check
+    render plain: 'OK', status: :ok
+  end
+
   private
 
   def set_csrf_cookie
