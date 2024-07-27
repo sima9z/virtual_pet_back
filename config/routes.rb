@@ -17,5 +17,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :users
+  resource :cat do
+    member do
+      post 'feed'
+      post 'water'
+      post 'walk'
+      post 'update_state'
+    end
+  end
+
   get '/check_pets', to: 'pets#check_pets'
 end
