@@ -25,7 +25,7 @@ class DogController < ApplicationController
   end
 
   def create
-    @dog = current_user.dog.build(dog_params)
+    @dog = current_user.build_dog(dog_params)
     if @dog.save
       render json: @dog, status: :created
     else
@@ -36,10 +36,10 @@ class DogController < ApplicationController
   private
 
   def set_dog
-    @dog = current_user.dog.find(params[:id])
+    @dog = current_user.dog
   end
 
   def dog_params
-    params.require(:dog).permit(:name, :breed, :age, :experience, :level, :hungry, :thirsty, :is_adult)
+    params.require(:dog).permit(:name, :breed, :age, :experience, :level, :states, :is_adult)
   end
 end

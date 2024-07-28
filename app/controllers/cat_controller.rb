@@ -25,7 +25,7 @@ class CatController < ApplicationController
   end
 
   def create
-    @cat = current_user.cat.build(cat_params)
+    @cat = current_user.build_cat(cat_params)
     if @cat.save
       render json: @cat, status: :created
     else
@@ -36,10 +36,10 @@ class CatController < ApplicationController
   private
 
   def set_cat
-    @cat = current_user.cat.find(params[:id])
+    @cat = current_user.cat
   end
 
   def cat_params
-    params.require(:cat).permit(:name, :breed, :age, :experience, :level, :hungry, :thirsty, :is_adult)
+    params.require(:cat).permit(:name, :breed, :age, :experience, :level, :states, :is_adult)
   end
 end
