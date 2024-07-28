@@ -90,6 +90,6 @@ Rails.application.configure do
       url: ENV['REDIS_URL'],
       namespace: "session"
     },
-  ], expire_after: 90.minutes, key: "_#{Rails.application.class.module_parent_name.downcase}_session", secure: Rails.env.production?
+  ], expire_after: 30.minutes, key: "_#{Rails.application.class.module_parent_name.downcase}_session", secure: Rails.env.production?
 
 end

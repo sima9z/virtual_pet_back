@@ -4,6 +4,8 @@ class UserSessionsController < ApplicationController
   def create
     user = login(params[:email], params[:password])
     if user
+      Rails.logger.debug "Logged in user: #{user.inspect}"
+      Rails.logger.debug "Session ID: #{session[:user_id]}"
       render json: { user: user }, status: :ok
     else
       Rails.logger.debug "Invalid email or password for email: #{params[:email]}"

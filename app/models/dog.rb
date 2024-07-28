@@ -20,8 +20,15 @@ class Dog < ApplicationRecord
   end
 
   def update_state(hungry_amount, thirsty_amount)
-    self.hungry = hungry_amount
-    self.thirsty = thirsty_amount
+    self.states = { hungry: hungry_amount, thirsty: thirsty_amount }.to_json
     save
+  end
+
+  def hungry
+    states['hungry']
+  end
+
+  def thirsty
+    states['thirsty']
   end
 end

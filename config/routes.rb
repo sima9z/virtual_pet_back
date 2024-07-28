@@ -7,25 +7,28 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
 
-  resources :users
-  resource :dog do
-    member do
-      post 'feed'
-      post 'water'
-      post 'walk'
-      post 'update_state'
-    end
-  end
-
-  resources :users
-  resource :cat do
-    member do
-      post 'feed'
-      post 'water'
-      post 'walk'
-      post 'update_state'
-    end
-  end
-
   get '/check_pets', to: 'pets#check_pets'
+  get '/current_user', to: 'users#current_user_action'
+
+  resources :users do
+    get 'current_user', on: :collection
+    resource :dog, only: [:create] do
+      member do
+        post 'feed'
+        post 'water'
+        post 'walk'
+        post 'update_state'
+      end
+    end
+
+    resource :cat, only: [:create] do
+      member do
+        post 'feed'
+        post 'water'
+        post 'walk'
+        post 'update_state'
+      end
+    end
+  end
+  
 end

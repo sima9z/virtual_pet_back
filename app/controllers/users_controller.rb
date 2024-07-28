@@ -10,6 +10,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def current_user_action
+    if logged_in?
+      render json: current_user, only: [:id, :email, :name]
+    else
+      render json: { message: "Not logged in" }, status: :unauthorized
+    end
+  end
+
   private
 
   def user_params

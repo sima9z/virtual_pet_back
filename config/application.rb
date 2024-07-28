@@ -42,17 +42,15 @@ module App
 
     # セッションミドルウェアの追加
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::RedisStore, {
-      servers: [
-        {
-          url: ENV['REDIS_URL'],
-          namespace: "session"
-        },
-      ],
-      expire_after: 90.minutes,
+    config.middleware.use ActionDispatch::Session::CacheStore, {
+      expire_after: 30.minutes,
       key: "_#{Rails.application.class.module_parent_name.downcase}_session",
-      threadsafe: false,
       secure: Rails.env.production?
+    }
+
+    config.cache_store = :redis_cache_store, {
+      url: ENV['REDIS_URL'],
+      namespace: 'cache'
     }
 
     config.hosts << "back-patient-lake-2960.fly.dev"
