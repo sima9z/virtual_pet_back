@@ -39,5 +39,11 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 #
 # preload_app!
 
+if ENV.fetch("RAILS_ENV") == "production"
+  workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+  preload_app!
+  stdout_redirect '/app/log/puma.stdout.log', '/app/log/puma.stderr.log', true
+end
+
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
