@@ -16,7 +16,11 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Dotenv::Rails.load
+# 開発およびテスト環境でdotenvをロード
+if ['development', 'test'].include? ENV['RAILS_ENV']
+  require 'dotenv'
+  Dotenv.load('.env')
+end
 
 module App
   class Application < Rails::Application
