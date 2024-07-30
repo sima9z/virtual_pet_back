@@ -79,6 +79,8 @@ Rails.application.configure do
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  else
+    config.logger = ActiveSupport::Logger.new("/app/log/production.log")
   end
 
   # Do not dump schema after migrations.
