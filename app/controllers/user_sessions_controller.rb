@@ -6,7 +6,6 @@ class UserSessionsController < ApplicationController
     if user
       Rails.logger.debug "Logged in user: #{user.inspect}"
       Rails.logger.debug "Session ID: #{session[:user_id]}"
-      cookies[:test_cookie] = { value: "test_value", secure: true, same_site: :none }
       render json: { user: user }, status: :ok
     else
       Rails.logger.debug "Invalid email or password for email: #{params[:email]}"
