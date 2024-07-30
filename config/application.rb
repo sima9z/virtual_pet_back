@@ -45,7 +45,9 @@ module App
     config.middleware.use ActionDispatch::Session::CacheStore, {
       expire_after: 30.minutes,
       key: "_#{Rails.application.class.module_parent_name.downcase}_session",
-      secure: Rails.env.production?
+      secure: true,
+      same_site: :none,  # SameSite属性をNoneに設定
+      httponly: true
     }
 
     config.cache_store = :redis_cache_store, {
