@@ -46,7 +46,7 @@ module App
       expire_after: 30.minutes,
       key: "_#{Rails.application.class.module_parent_name.downcase}_session",
       secure: Rails.env.production?,
-      same_site: :lax,   # SameSite属性をNoneに設定
+      same_site: :none,   # SameSite属性をNoneに設定
       httponly: true
     }
 
