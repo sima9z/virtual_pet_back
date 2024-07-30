@@ -42,16 +42,17 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 if ENV.fetch("RAILS_ENV") == "production"
   workers ENV.fetch("WEB_CONCURRENCY") { 2 }
   preload_app!
-  stdout_redirect '/app/log/puma.stdout.log', '/app/log/puma.stderr.log', true
+end
 
-  # Worker setup
-  on_worker_boot do
-    ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
-  end
+stdout_redirect '/app/log/puma.stdout.log', '/app/log/puma.stderr.log', true
 
-  before_fork do
-    ActiveRecord::Base.connection_pool.disconnect! if defined?(ActiveRecord)
-  end
+# Worker setup
+on_worker_boot do
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+end
+
+before_fork do
+  ActiveRecord::Base.connection_pool.disconnect! if defined?(ActiveRecord)
 end
 
 # Allow puma to be restarted by `bin/rails restart` command.
