@@ -45,8 +45,8 @@ module App
     config.middleware.use ActionDispatch::Session::CacheStore, {
       expire_after: 30.minutes,
       key: "_#{Rails.application.class.module_parent_name.downcase}_session",
-      secure: Rails.env.production?,
-      same_site: :none,   # SameSite属性をNoneに設定
+      secure: ENV['SESSION_SECURE'] == 'true',  # 環境変数を参照
+      same_site: ENV['SESSION_SAME_SITE']&.to_sym || :lax,  # 環境変数を参照し、デフォルトは:lax
       httponly: true
     }
 
