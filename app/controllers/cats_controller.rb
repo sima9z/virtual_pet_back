@@ -1,4 +1,4 @@
-class CatController < ApplicationController
+class CatsController < ApplicationController
   skip_before_action :require_login
   before_action :set_cat, only: [:feed, :water, :walk, :update_state]
 

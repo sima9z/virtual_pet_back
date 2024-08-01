@@ -12,22 +12,23 @@ Rails.application.routes.draw do
 
   resources :users do
     get 'current_user', on: :collection
-    resource :dog, only: [:create] do
-      member do
-        post 'feed'
-        post 'water'
-        post 'walk'
-        post 'update_state'
-      end
-    end
+  end
 
-    resource :cat, only: [:create] do
-      member do
-        post 'feed'
-        post 'water'
-        post 'walk'
-        post 'update_state'
-      end
+  resources :dogs, only: [:create] do
+    member do
+      post 'feed'
+      post 'water'
+      post 'walk'
+      post 'update_state'
+    end
+  end
+
+  resources :cats, only: [:create] do
+    member do
+      post 'feed'
+      post 'water'
+      post 'walk'
+      post 'update_state'
     end
   end
   
