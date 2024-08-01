@@ -3,6 +3,7 @@ class PetsController < ApplicationController
 
   def check_pets
     pets_exist = current_user.present? && ( current_user.dog.present? || current_user.cat.present? )
+    Rails.logger.debug "Pets exist: #{pets_exist}"
     render json: { pets_exist: pets_exist }
   end
 end
