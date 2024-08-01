@@ -17,4 +17,28 @@ class PetsController < ApplicationController
                end
     render json: { petType: pet_type }
   end
+
+  def pet_details
+    pet = if current_user.dog.present?
+            current_user.dog
+          elsif current_user.cat.present?
+            current_user.cat
+          else
+            nil
+          end
+
+    if pet
+      render json: {
+        name: pet.name,
+        breed: pet.breed,
+        level: pet.level,
+        experience: pet.experience,
+        states: pet.states,
+        age: pet.age,
+        is_adult: pet.is_adult
+      }
+    else
+      render json: { error: 'No pet found' }, status: :not_found
+    end
+  end
 end
