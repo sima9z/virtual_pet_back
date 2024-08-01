@@ -29,6 +29,7 @@ class PetsController < ApplicationController
 
     if pet
       render json: {
+        id: pet.id,
         name: pet.name,
         breed: pet.breed,
         level: pet.level,
