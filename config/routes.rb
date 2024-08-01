@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get '/check_pets', to: 'pets#check_pets'
   get '/current_user', to: 'users#current_user_action'
+  get '/pet_info', to: 'pets#pet_info'
 
   resources :users do
     get 'current_user', on: :collection
