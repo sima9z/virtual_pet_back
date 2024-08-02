@@ -1,5 +1,4 @@
 class DogsController < ApplicationController
-  skip_before_action :require_login
   before_action :set_dog, only: [:feed, :water, :walk, :update_state]
 
   def feed
