@@ -34,6 +34,9 @@ class PetsController < ApplicationController
         breed: pet.breed,
         level: pet.level,
         experience: pet.experience,
+        physical:pet.physical,
+        satiety: pet.satiety,
+        happiness: pet.happiness,
         states: pet.states,
         age: pet.age,
         is_adult: pet.is_adult
