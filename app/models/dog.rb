@@ -1,6 +1,8 @@
 class Dog < ApplicationRecord
   belongs_to :user
 
+  validates :physical, :satiety, :happiness, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
   def level_up_experience
     100 * level ** 1.5
   end

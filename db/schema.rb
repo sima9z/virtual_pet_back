@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_27_100052) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_07_160533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_27_100052) do
     t.boolean "is_adult", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "physical", default: 30
+    t.integer "satiety", default: 20
+    t.integer "happiness", default: 20
     t.index ["user_id"], name: "index_cats_on_user_id"
   end
 
@@ -39,6 +42,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_27_100052) do
     t.boolean "is_adult", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "physical", default: 30
+    t.integer "satiety", default: 20
+    t.integer "happiness", default: 20
     t.index ["user_id"], name: "index_dogs_on_user_id"
   end
 
