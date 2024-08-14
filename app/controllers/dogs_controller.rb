@@ -1,5 +1,5 @@
 class DogsController < ApplicationController
-  before_action :set_dog, only: [:feed, :water, :walk, :update_state]
+  before_action :set_dog, only: [:feed, :water, :play, :update_state]
 
   def feed
     @dog.gain_experience(10)
@@ -11,7 +11,7 @@ class DogsController < ApplicationController
     render json: @dog
   end
 
-  def walk
+  def play
     @dog.gain_experience(15)
     render json: @dog
   end

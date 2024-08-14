@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     member do
       post 'feed'
       post 'water'
-      post 'walk'
+      post 'play'
       post 'update_state'
     end
   end
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     member do
       post 'feed'
       post 'water'
-      post 'walk'
+      post 'play'
       post 'update_state'
     end
   end
