@@ -12,13 +12,8 @@ class Cat < ApplicationRecord
     while self.experience >= level_up_experience
       self.experience -= level_up_experience
       self.level += 1
-      check_adult_status
     end
     save
-  end
-
-  def check_adult_status
-    self.is_adult = self.level >= 10
   end
 
   def update_state(hungry_amount, thirsty_amount)

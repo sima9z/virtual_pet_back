@@ -38,8 +38,6 @@ class PetsController < ApplicationController
         satiety: pet.satiety,
         happiness: pet.happiness,
         states: pet.states,
-        age: pet.age,
-        is_adult: pet.is_adult
       }
     else
       render json: { error: 'No pet found' }, status: :not_found
