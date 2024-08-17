@@ -1,5 +1,6 @@
 class CatsController < ApplicationController
   before_action :set_cat, only: [:feed, :water, :play, :update_state]
+  skip_before_action :require_login
 
   def feed
     @cat.gain_experience(10)

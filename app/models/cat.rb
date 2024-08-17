@@ -9,10 +9,25 @@ class Cat < ApplicationRecord
 
   def gain_experience(amount)
     self.experience += amount
-    while self.experience >= level_up_experience
+    previous_level = self.level
+  
+    # レベルアップの条件を確認し、必要に応じてレベルを上げる
+    if self.experience >= level_up_experience
       self.experience -= level_up_experience
       self.level += 1
     end
+  
+    # レベル3に初めて達したときにのみ breeding を実行
+    if previous_level < 3 && self.level >= 3 && !self.bred_at_level_3
+      breeding
+      self.bred_at_level_3 = true
+    end
+  
+    save
+  end
+
+  def breeding
+    self.offspring_count += 1 # 繁殖回数を増やす
     save
   end
 
