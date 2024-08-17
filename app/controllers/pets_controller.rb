@@ -1,5 +1,5 @@
 class PetsController < ApplicationController
-  skip_before_action :require_login, only: [:check_pets]
+  skip_before_action :require_login, only: [:check_pets, :pet_info, :pet_details]
 
   def check_pets
     pets_exist = current_user.present? && ( current_user.dog.present? || current_user.cat.present? )
@@ -8,14 +8,18 @@ class PetsController < ApplicationController
   end
 
   def pet_info
-    pet_type = if current_user.dog.present?
-                 'dog'
-               elsif current_user.cat.present?
-                 'cat'
-               else
-                 'none'
-               end
-    render json: { petType: pet_type }
+    if current_user.dog.present?
+      pet_type = 'dog'
+      offspring_count = current_user.dog.offspring_count || 0
+    elsif current_user.cat.present?
+      pet_type = 'cat'
+      offspring_count = current_user.cat.offspring_count || 0
+    else
+      pet_type = 'none'
+      offspring_count = 0
+    end
+  
+    render json: { petType: pet_type, offspringCount: offspring_count }
   end
 
   def pet_details
@@ -38,6 +42,7 @@ class PetsController < ApplicationController
         satiety: pet.satiety,
         happiness: pet.happiness,
         states: pet.states,
+        offspring_count: pet.offspring_count
       }
     else
       render json: { error: 'No pet found' }, status: :not_found

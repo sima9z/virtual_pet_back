@@ -1,5 +1,6 @@
 class DogsController < ApplicationController
   before_action :set_dog, only: [:feed, :water, :play, :update_state]
+  skip_before_action :require_login
 
   def feed
     @dog.gain_experience(10)
