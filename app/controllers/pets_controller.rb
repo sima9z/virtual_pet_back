@@ -58,8 +58,7 @@ class PetsController < ApplicationController
             nil
           end
 
-    pet.physical += recovery_amount
-    pet.physical = [pet.physical, max_physical].min
+    pet.physical += 1
     pet.save
     render json: { physical: pet.physical }
   end
