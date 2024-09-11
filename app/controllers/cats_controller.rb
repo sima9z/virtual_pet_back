@@ -14,7 +14,12 @@ class CatsController < ApplicationController
 
   def play
     @cat.gain_experience(15)
-    render json: @cat
+    @cat.physical -= 3
+    if @cat.save
+      render json: @cat
+    else
+      render json: { errors: @cat.errors }, status: :unprocessable_entity
+    end
   end
 
   def update_state
