@@ -43,4 +43,8 @@ class Cat < ApplicationRecord
   def thirsty
     states['thirsty']
   end
+
+  def max_physical
+    50
+  end
 end
