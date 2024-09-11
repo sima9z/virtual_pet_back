@@ -48,4 +48,19 @@ class PetsController < ApplicationController
       render json: { error: 'No pet found' }, status: :not_found
     end
   end
+
+  def pet_physical_recover
+    pet = if current_user.dog.present?
+            current_user.dog
+          elsif current_user.cat.present?
+            current_user.cat
+          else
+            nil
+          end
+
+    pet.physical += recovery_amount
+    pet.physical = [pet.physical, max_physical].min
+    pet.save
+    render json: { physical: pet.physical }
+  end
 end

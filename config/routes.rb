@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/current_user', to: 'users#current_user_action'
   get '/pet_info', to: 'pets#pet_info'
   get '/pet_details', to: 'pets#pet_details' 
+  get '/pet_physical_recover', to: 'pets#pet_physical_recover' 
 
   resources :users do
     get 'current_user', on: :collection

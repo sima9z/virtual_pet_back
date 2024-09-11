@@ -14,7 +14,12 @@ class DogsController < ApplicationController
 
   def play
     @dog.gain_experience(15)
-    render json: @dog
+    @dog.physical -= 3
+    if @dog.save
+      render json: @dog
+    else
+      render json: { errors: @dog.errors }, status: :unprocessable_entity
+    end
   end
 
   def update_state
