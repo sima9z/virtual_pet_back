@@ -1,5 +1,5 @@
 class CatsController < ApplicationController
-  before_action :set_cat, only: [:feed, :water, :play, :update_state]
+  before_action :set_cat, only: [:feed, :stroke, :play, :update_state]
   skip_before_action :require_login
 
   def feed
@@ -7,7 +7,7 @@ class CatsController < ApplicationController
     render json: @cat
   end
 
-  def water
+  def stroke
     @cat.gain_experience(5)
     render json: @cat
   end
