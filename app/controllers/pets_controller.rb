@@ -53,7 +53,7 @@ class PetsController < ApplicationController
     pet = current_user.dog || current_user.cat
 
     if pet
-      pet.physical += recovery_amount
+      pet.physical += 1
       pet.physical = [pet.physical, pet.max_physical].min # 体力の最大値を超えないように制限
       pet.save
       render json: { physical: pet.physical }
