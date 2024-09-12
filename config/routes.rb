@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :dogs, only: [:create] do
     member do
       post 'feed'
-      post 'water'
+      post 'stroke'
       post 'play'
       post 'update_state'
     end
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   resources :cats, only: [:create] do
     member do
       post 'feed'
-      post 'water'
+      post 'stroke'
       post 'play'
       post 'update_state'
     end
