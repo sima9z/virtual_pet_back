@@ -3,18 +3,23 @@ class DogsController < ApplicationController
   skip_before_action :require_login
 
   def feed
-    @dog.gain_experience(10)
+    @dog.satiety += 50
+    @dog.satiety = [@dog.satiety, @dog.max_satiety].min
+    @dog.save
     render json: @dog
   end
 
   def stroke
-    @dog.gain_experience(5)
+    @dog.happiness += 50
+    @dog.happiness = [@dog.happiness, @dog.max_happiness].min
+    @dog.save
     render json: @dog
   end
 
   def play
     @dog.gain_experience(15)
     @dog.physical -= 3
+    @dog.satiety = [@dog.satiety, 0].max
     if @dog.save
       render json: @dog
     else

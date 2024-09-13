@@ -12,12 +12,23 @@ class UserSessionsController < ApplicationController
       # 最後のログアウト時刻が記録されている場合、経過時間に基づいて体力を回復
       if user.last_logout_at
         elapsed_time = Time.current - user.last_logout_at
-        recovery_amount = calculate_recovery(elapsed_time)
+         # 体力回復
+        recovery_amount = calculate_physical_recovery(elapsed_time)
+        # 幸福度と満腹度の減少
+        decrease_amount = calculate_stat_decrease(elapsed_time)
   
         pet = user.dog || user.cat # 飼っているペットが犬か猫か確認
         if pet
+          # 体力回復
           pet.physical += recovery_amount
           pet.physical = [pet.physical, pet.max_physical].min # 体力の最大値を超えないように制限
+
+          # 幸福度と満腹度の減少
+          pet.satiety -= decrease_amount
+          pet.satiety = [pet.satiety, 0].max
+          pet.happiness -= decrease_amount
+          pet.happiness = [pet.happiness, 0].max
+
           pet.save
         end
       end
@@ -43,9 +54,14 @@ class UserSessionsController < ApplicationController
 
   private
 
-  def calculate_recovery(elapsed_time)
-    # 体力回復の計算 (例えば、1分ごとに体力1回復)
+  def calculate_physical_recovery(elapsed_time)
+    # 体力回復の計算 (1分ごとに体力1回復)
     (elapsed_time / 1.minute).floor
+  end
+  
+  def calculate_stat_decrease(elapsed_time)
+    # 幸福度と満腹度の減少計算 (10分ごとに1減少)
+    (elapsed_time / 10.minutes).floor
   end
 
 end

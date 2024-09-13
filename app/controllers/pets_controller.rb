@@ -59,4 +59,17 @@ class PetsController < ApplicationController
       render json: { physical: pet.physical }
     end
   end
+
+  def pet_stat_decrease
+    pet = current_user.dog || current_user.cat
+
+    if pet
+      pet.satiety -= 1
+      pet.happiness -= 1
+      pet.satiety = [pet.satiety, 0].max
+      pet.happiness = [pet.happiness, 0].max
+      pet.save
+      render json: { satiety: pet.satiety, happiness: pet.happiness }
+    end
+  end
 end
