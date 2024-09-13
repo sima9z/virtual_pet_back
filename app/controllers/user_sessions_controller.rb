@@ -28,6 +28,7 @@ class UserSessionsController < ApplicationController
           pet.satiety = [pet.satiety, 0].max
           pet.happiness -= decrease_amount
           pet.happiness = [pet.happiness, 0].max
+          pet.update_states
 
           pet.save
         end
