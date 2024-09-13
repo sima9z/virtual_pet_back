@@ -3,18 +3,23 @@ class CatsController < ApplicationController
   skip_before_action :require_login
 
   def feed
-    @cat.gain_experience(10)
+    @cat.satiety += 50
+    @cat.satiety = [@cat.satiety, @cat.max_satiety].min
+    @cat.save
     render json: @cat
   end
 
   def stroke
-    @cat.gain_experience(5)
+    @cat.happiness += 50
+    @cat.happiness = [@cat.happiness, @cat.happiness].min
+    @cat.save
     render json: @cat
   end
 
   def play
     @cat.gain_experience(15)
     @cat.physical -= 3
+    @cat.physical = [@cat.physical, 0].max
     if @cat.save
       render json: @cat
     else

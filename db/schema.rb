@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_11_115312) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_13_050051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,6 +29,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_11_115312) do
     t.integer "offspring_count", default: 0
     t.boolean "bred_at_level_3", default: false
     t.integer "max_physical", default: 50
+    t.datetime "last_update_at"
+    t.integer "max_satiety", default: 100
+    t.integer "max_happiness", default: 100
     t.index ["user_id"], name: "index_cats_on_user_id"
   end
 
@@ -47,6 +50,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_11_115312) do
     t.integer "offspring_count", default: 0
     t.boolean "bred_at_level_3", default: false
     t.integer "max_physical", default: 50
+    t.datetime "last_update_at"
+    t.integer "max_satiety", default: 100
+    t.integer "max_happiness", default: 100
     t.index ["user_id"], name: "index_dogs_on_user_id"
   end
 

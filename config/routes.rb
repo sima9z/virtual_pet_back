@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get '/pet_info', to: 'pets#pet_info'
   get '/pet_details', to: 'pets#pet_details' 
   post '/pet_physical_recover', to: 'pets#pet_physical_recover' 
+  post '/pet_stat_decrease', to: 'pets#pet_stat_decrease' 
 
   resources :users do
     get 'current_user', on: :collection
