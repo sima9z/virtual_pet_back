@@ -3,6 +3,8 @@ class Dog < ApplicationRecord
 
   validates :physical, :satiety, :happiness, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  COOLDOWN_TIME = 60.minutes
+
   def level_up_experience
     100 * level ** 1.5
   end
@@ -63,4 +65,13 @@ class Dog < ApplicationRecord
       self.states &= ~2 # 不機嫌フラグを解除
     end
   end
+
+  def can_feed?
+    last_feed_at.nil? || last_feed_at < COOLDOWN_TIME.ago
+  end
+
+  def can_stroke?
+    last_stroke_at.nil? || last_stroke_at < COOLDOWN_TIME.ago
+  end
+
 end
