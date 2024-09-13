@@ -3,8 +3,15 @@ class DogsController < ApplicationController
   skip_before_action :require_login
 
   def feed
+    if !@dog.can_feed?
+      cooldown_remaining = (COOLDOWN_TIME - (Time.current - @dog.last_feed_at)).to_i
+      render json: { error: "まだご飯をあげたばかりです。あと #{cooldown_remaining / 60} 分待ってください。" }, status: :unprocessable_entity
+      return
+    end
+
     @dog.satiety += 50
     @dog.satiety = [@dog.satiety, @dog.max_satiety].min
+    @dog.last_feed_at = Time.current # 最後にご飯をあげた時間を記録
     @dog.update_states
 
     @dog.save
@@ -12,8 +19,15 @@ class DogsController < ApplicationController
   end
 
   def stroke
+    if !@dog.can_stroke?
+      cooldown_remaining = (COOLDOWN_TIME - (Time.current - @dog.last_stroke_at)).to_i
+      render json: { error: "あまりかまうとストレスになります。あと #{cooldown_remaining / 60} 分待ってください。"}, status: :unprocessable_entity
+      return
+    end
+
     @dog.happiness += 50
     @dog.happiness = [@dog.happiness, @dog.max_happiness].min
+    @dog.last_stroke_at = Time.current # 最後になでた時間
     @dog.update_states
 
     @dog.save

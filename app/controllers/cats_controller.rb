@@ -3,8 +3,15 @@ class CatsController < ApplicationController
   skip_before_action :require_login
 
   def feed
+    if !@cat.can_feed?
+      cooldown_remaining = (COOLDOWN_TIME - (Time.current - @cat.last_feed_at)).to_i
+      render json: { error: "まだご飯をあげたばかりです。あと #{cooldown_remaining / 60} 分待ってください。" }, status: :unprocessable_entity
+      return
+    end
+
     @cat.satiety += 50
     @cat.satiety = [@cat.satiety, @cat.max_satiety].min
+    @cat.last_feed_at = Time.current # 最後にご飯をあげた時間を記録
     @cat.update_states
 
     @cat.save
@@ -12,8 +19,15 @@ class CatsController < ApplicationController
   end
 
   def stroke
+    if !@cat.can_stroke?
+      cooldown_remaining = (COOLDOWN_TIME - (Time.current - @cat.last_stroke_at)).to_i
+      render json: { error: "あまりかまうとストレスになります。あと #{cooldown_remaining / 60} 分待ってください。" }, status: :unprocessable_entity
+      return
+    end
+
     @cat.happiness += 50
     @cat.happiness = [@cat.happiness, @cat.happiness].min
+    @cat.last_stroke_at = Time.current # 最後になでた時間
     @cat.update_states
 
     @cat.save
