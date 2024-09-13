@@ -26,7 +26,7 @@ class CatsController < ApplicationController
     end
 
     @cat.happiness += 50
-    @cat.happiness = [@cat.happiness, @cat.happiness].min
+    @cat.happiness = [@cat.happiness, @cat.max_happiness].min
     @cat.last_stroke_at = Time.current # 最後になでた時間
     @cat.update_states
 
