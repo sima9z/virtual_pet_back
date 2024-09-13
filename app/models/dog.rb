@@ -47,4 +47,20 @@ class Dog < ApplicationRecord
   def max_physical
     50
   end
+
+  def update_states
+    # 空腹状態をチェック (満腹度が20以下なら空腹フラグ)
+    if self.satiety <= 20
+      self.states |= 1  # 空腹フラグを立てる
+    else
+      self.states &= ~1 # 空腹フラグを解除
+    end
+  
+    # 不機嫌状態をチェック (幸福度が20以下なら不機嫌フラグ)
+    if self.happiness <= 20
+      self.states |= 2  # 不機嫌フラグを立てる
+    else
+      self.states &= ~2 # 不機嫌フラグを解除
+    end
+  end
 end

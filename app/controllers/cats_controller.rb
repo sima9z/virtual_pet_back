@@ -5,6 +5,8 @@ class CatsController < ApplicationController
   def feed
     @cat.satiety += 50
     @cat.satiety = [@cat.satiety, @cat.max_satiety].min
+    @cat.update_states
+
     @cat.save
     render json: @cat
   end
@@ -12,11 +14,28 @@ class CatsController < ApplicationController
   def stroke
     @cat.happiness += 50
     @cat.happiness = [@cat.happiness, @cat.happiness].min
+    @cat.update_states
+
     @cat.save
     render json: @cat
   end
 
   def play
+    if @cat.physical < 3
+      render json: { error: '疲れているようです。休ませてあげましょう' }, status: :unprocessable_entity
+      return
+    end
+
+    if @cat.states == 1
+      render json: { error: 'お腹がすいているようです。先にご飯を上げてください' }, status: :unprocessable_entity
+      return
+    end
+
+    if @cat.states == 2
+      render json: { error: 'なんだが不機嫌そうで遊んでくれません。' }, status: :unprocessable_entity
+      return
+    end
+
     @cat.gain_experience(15)
     @cat.physical -= 3
     @cat.physical = [@cat.physical, 0].max
@@ -25,13 +44,6 @@ class CatsController < ApplicationController
     else
       render json: { errors: @cat.errors }, status: :unprocessable_entity
     end
-  end
-
-  def update_state
-    hungry_amount = params[:hungry]
-    thirsty_amount = params[:thirsty]
-    @cat.update_state(hungry_amount, thirsty_amount)
-    render json: @cat
   end
 
   def create

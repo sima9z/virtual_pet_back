@@ -68,8 +68,10 @@ class PetsController < ApplicationController
       pet.happiness -= 1
       pet.satiety = [pet.satiety, 0].max
       pet.happiness = [pet.happiness, 0].max
+      pet.update_states
       pet.save
       render json: { satiety: pet.satiety, happiness: pet.happiness }
     end
   end
+  
 end
