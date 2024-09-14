@@ -4,7 +4,7 @@ class CatsController < ApplicationController
 
   def feed
     if !@cat.can_feed?
-      cooldown_remaining = (COOLDOWN_TIME - (Time.current - @cat.last_feed_at)).to_i
+      cooldown_remaining = (Cat::COOLDOWN_TIME - (Time.current - @cat.last_feed_at)).to_i
       render json: { error: "まだご飯をあげたばかりです。あと #{cooldown_remaining / 60} 分待ってください。" }, status: :unprocessable_entity
       return
     end
@@ -20,7 +20,7 @@ class CatsController < ApplicationController
 
   def stroke
     if !@cat.can_stroke?
-      cooldown_remaining = (COOLDOWN_TIME - (Time.current - @cat.last_stroke_at)).to_i
+      cooldown_remaining = (Cat::COOLDOWN_TIME - (Time.current - @cat.last_stroke_at)).to_i
       render json: { error: "あまりかまうとストレスになります。あと #{cooldown_remaining / 60} 分待ってください。" }, status: :unprocessable_entity
       return
     end
