@@ -50,6 +50,11 @@ class CatsController < ApplicationController
       return
     end
 
+    if @cat.states == 3
+      render json: { error: 'お腹もすいているようですし、なんだか寂しそうです' }, status: :unprocessable_entity
+      return
+    end
+
     @cat.gain_experience(15)
     @cat.physical -= 3
     @cat.physical = [@cat.physical, 0].max
