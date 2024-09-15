@@ -50,6 +50,11 @@ class DogsController < ApplicationController
       return
     end
 
+    if @dog.states == 3
+      render json: { error: 'お腹もすいているようですし、なんだか寂しそうです' }, status: :unprocessable_entity
+      return
+    end
+
     @dog.gain_experience(15)
     @dog.physical -= 3
     @dog.physical = [@dog.physical, 0].max
