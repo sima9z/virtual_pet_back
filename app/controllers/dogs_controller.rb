@@ -1,5 +1,5 @@
 class DogsController < ApplicationController
-  before_action :set_dog, only: [:feed, :stroke, :play, :update_state]
+  before_action :set_dog, only: [:feed, :stroke, :play, :update_state, :update]
   skip_before_action :require_login
 
   def feed
@@ -74,6 +74,14 @@ class DogsController < ApplicationController
     end
   end
 
+  def update
+    if @dog.update(dog_params)
+      render json: @dog, status: :ok
+    else
+      render json: @dog.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_dog
@@ -81,6 +89,7 @@ class DogsController < ApplicationController
   end
 
   def dog_params
-    params.require(:dog).permit(:name, :breed, :experience, :level, :states)
+    params.require(:dog).permit(:name, :breed)
   end
+
 end
