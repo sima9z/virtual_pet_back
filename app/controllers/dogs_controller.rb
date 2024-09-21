@@ -66,11 +66,15 @@ class DogsController < ApplicationController
   end
 
   def create
-    @dog = current_user.build_dog(dog_params)
-    if @dog.save
-      render json: @dog, status: :created
+    if current_user.dog.present?
+      render json: { error: 'すでにペットが存在します。更新を行ってください。' }, status: :unprocessable_entity
     else
-      render json: @dog.errors, status: :unprocessable_entity
+      @dog = current_user.build_dog(dog_params)
+      if @dog.save
+        render json: @dog, status: :created
+      else
+        render json: @dog.errors, status: :unprocessable_entity
+      end
     end
   end
 

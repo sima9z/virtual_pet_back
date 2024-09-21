@@ -2,9 +2,10 @@ class PetsController < ApplicationController
   skip_before_action :require_login, only: [:check_pets, :pet_info, :pet_details]
 
   def check_pets
-    pets_exist = current_user.present? && ( current_user.dog.present? || current_user.cat.present? )
-    Rails.logger.debug "Pets exist: #{pets_exist}"
-    render json: { pets_exist: pets_exist }
+    pets_exist = current_user.present? && (current_user.dog.present? || current_user.cat.present?)
+    dog_id = current_user.dog.id if current_user.dog.present?
+    cat_id = current_user.cat.id if current_user.cat.present?
+    render json: { pets_exist: pets_exist, dog_id: dog_id, cat_id: cat_id }
   end
 
   def pet_info
