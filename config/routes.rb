@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     get 'current_user', on: :collection
   end
 
-  resources :dogs, only: [:create] do
+  resources :dogs, only: [:create, :update] do
     member do
       post 'feed'
       post 'stroke'
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :cats, only: [:create] do
+  resources :cats, only: [:create, :update] do
     member do
       post 'feed'
       post 'stroke'

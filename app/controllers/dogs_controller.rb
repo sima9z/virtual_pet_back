@@ -1,5 +1,5 @@
 class DogsController < ApplicationController
-  before_action :set_dog, only: [:feed, :stroke, :play, :update_state]
+  before_action :set_dog, only: [:feed, :stroke, :play, :update_state, :update]
   skip_before_action :require_login
 
   def feed
@@ -66,9 +66,21 @@ class DogsController < ApplicationController
   end
 
   def create
-    @dog = current_user.build_dog(dog_params)
-    if @dog.save
-      render json: @dog, status: :created
+    if current_user.dog.present?
+      render json: { error: 'すでにペットが存在します。更新を行ってください。' }, status: :unprocessable_entity
+    else
+      @dog = current_user.build_dog(dog_params)
+      if @dog.save
+        render json: @dog, status: :created
+      else
+        render json: @dog.errors, status: :unprocessable_entity
+      end
+    end
+  end
+
+  def update
+    if @dog.update(dog_params)
+      render json: @dog, status: :ok
     else
       render json: @dog.errors, status: :unprocessable_entity
     end
@@ -81,6 +93,7 @@ class DogsController < ApplicationController
   end
 
   def dog_params
-    params.require(:dog).permit(:name, :breed, :experience, :level, :states)
+    params.require(:dog).permit(:name, :breed)
   end
+
 end
