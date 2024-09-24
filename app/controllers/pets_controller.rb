@@ -33,10 +33,12 @@ class PetsController < ApplicationController
           end
 
     if pet
+      species = current_user.dog.present? ? '犬' : '猫'
       render json: {
         id: pet.id,
         name: pet.name,
         breed: pet.breed,
+        species: species,  # 犬か猫か
         level: pet.level,
         experience: pet.experience,
         physical:pet.physical,
