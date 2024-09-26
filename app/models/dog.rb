@@ -20,7 +20,7 @@ class Dog < ApplicationRecord
     end
   
     # レベル3に初めて達したときにのみ breeding を実行
-    if previous_level < 3 && self.level >= 3 && !self.bred_at_level_3
+    if self.level % 3 == 0 && previous_level < self.level && !self.bred_at_level_3
       breeding
       self.bred_at_level_3 = true
     end
