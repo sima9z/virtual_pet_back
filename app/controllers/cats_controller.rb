@@ -55,10 +55,27 @@ class CatsController < ApplicationController
       return
     end
 
+    # 日をまたいだらフラグとプレイカウントをリセット
+    if @cat.last_played_at.present? && @cat.last_played_at.to_date != Date.current
+      @cat.bad_status_flag = false
+      @cat.play_count = 0
+    end
+
+    if @cat.bad_status_flag
+      if @cat.play_count >= 3
+        render json: { error: '今日はもう十分遊びました。また明日遊びましょう。' }, status: :unprocessable_entity
+        return
+      end
+    end
+
     previous_level = @cat.level
     @cat.gain_experience(15)
     @cat.physical -= 3
     @cat.physical = [@cat.physical, 0].max
+
+    # 遊び回数のカウントと最終遊び日時の更新
+    @dog.play_count += 1
+    @dog.last_played_at = Time.current
 
     # レベルアップと繁殖のフラグを設定
     level_up = @cat.level > previous_level

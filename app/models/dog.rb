@@ -37,6 +37,7 @@ class Dog < ApplicationRecord
     # 空腹状態をチェック (満腹度が20以下なら空腹フラグ)
     if self.satiety <= 20
       self.states |= 1  # 空腹フラグを立てる
+      self.bad_status_flag = true
     else
       self.states &= ~1 # 空腹フラグを解除
     end
@@ -44,6 +45,7 @@ class Dog < ApplicationRecord
     # 不機嫌状態をチェック (幸福度が20以下なら不機嫌フラグ)
     if self.happiness <= 20
       self.states |= 2  # 不機嫌フラグを立てる
+      self.bad_status_flag = true
     else
       self.states &= ~2 # 不機嫌フラグを解除
     end
