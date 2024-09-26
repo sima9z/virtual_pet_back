@@ -69,6 +69,7 @@ class DogsController < ApplicationController
     end
 
     previous_level = @dog.level
+    previous_offspring_born = @dog.offspring_count
     @dog.gain_experience(15)
     @dog.physical -= 3
     @dog.physical = [@dog.physical, 0].max
@@ -79,7 +80,7 @@ class DogsController < ApplicationController
 
     # レベルアップと繁殖のフラグを設定
     level_up = @dog.level > previous_level
-    offspring_born = @dog.offspring_count > 0 && @dog.level % 3 == 0
+    offspring_born = @dog.offspring_count > previous_offspring_born
 
     if @dog.save
       render json: { dog: @dog, level_up: level_up, offspring_born: offspring_born, success: true }
