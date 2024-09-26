@@ -34,6 +34,9 @@ class PetsController < ApplicationController
 
     if pet
       species = current_user.dog.present? ? '犬' : '猫'
+      next_level_experience = pet.level_up_experience.floor
+      experience_to_next_level = (next_level_experience - pet.experience).floor
+
       render json: {
         id: pet.id,
         name: pet.name,
@@ -41,6 +44,7 @@ class PetsController < ApplicationController
         species: species,  # 犬か猫か
         level: pet.level,
         experience: pet.experience,
+        experience_to_next_level: experience_to_next_level,
         physical:pet.physical,
         satiety: pet.satiety,
         happiness: pet.happiness,
