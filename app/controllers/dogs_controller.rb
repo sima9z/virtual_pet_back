@@ -55,13 +55,19 @@ class DogsController < ApplicationController
       return
     end
 
+    previous_level = @dog.level
     @dog.gain_experience(15)
     @dog.physical -= 3
     @dog.physical = [@dog.physical, 0].max
+
+    # レベルアップと繁殖のフラグを設定
+    level_up = @dog.level > previous_level
+    offspring_born = @dog.offspring_count > 0 && @dog.level % 3 == 0
+
     if @dog.save
-      render json: @dog
+      render json: { dog: @dog, level_up: level_up, offspring_born: offspring_born, success: true }
     else
-      render json: { errors: @dog.errors }, status: :unprocessable_entity
+      render json: { errors: @dog.errors, success: false }, status: :unprocessable_entity
     end
   end
 

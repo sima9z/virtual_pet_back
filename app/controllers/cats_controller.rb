@@ -55,13 +55,19 @@ class CatsController < ApplicationController
       return
     end
 
+    previous_level = @cat.level
     @cat.gain_experience(15)
     @cat.physical -= 3
     @cat.physical = [@cat.physical, 0].max
+
+    # レベルアップと繁殖のフラグを設定
+    level_up = @cat.level > previous_level
+    offspring_born = @cat.offspring_count > 0 && @cat.level % 3 == 0
+
     if @cat.save
-      render json: @cat
+      render json: { cat: @cat, level_up: level_up, offspring_born: offspring_born, success: true }
     else
-      render json: { errors: @cat.errors }, status: :unprocessable_entity
+      render json: { errors: @cat.errors, success: false }, status: :unprocessable_entity
     end
   end
 
