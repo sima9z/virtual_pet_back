@@ -69,6 +69,7 @@ class CatsController < ApplicationController
     end
 
     previous_level = @cat.level
+    previous_offspring_born = @cat.offspring_count
     @cat.gain_experience(15)
     @cat.physical -= 3
     @cat.physical = [@cat.physical, 0].max
@@ -79,7 +80,7 @@ class CatsController < ApplicationController
 
     # レベルアップと繁殖のフラグを設定
     level_up = @cat.level > previous_level
-    offspring_born = @cat.offspring_count > 0 && @cat.level % 3 == 0
+    offspring_born = @cat.offspring_count > previous_offspring_born
 
     if @cat.save
       render json: { cat: @cat, level_up: level_up, offspring_born: offspring_born, success: true }

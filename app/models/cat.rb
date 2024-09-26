@@ -19,10 +19,14 @@ class Cat < ApplicationRecord
       self.level += 1
     end
   
-    # レベル3に初めて達したときにのみ breeding を実行
-    if self.level % 3 == 0 && previous_level < self.level && !self.bred_at_level_3
+    # レベルが3の倍数に到達した場合、繁殖フラグをリセット
+    if self.level % 3 != 0
+      self.bred_at_level_3 = false
+    end
+  
+    # レベル3の倍数に初めて達したときのみ繁殖を実行
+    if self.level % 3 == 0 && !self.bred_at_level_3
       breeding
-      self.bred_at_level_3 = true
     end
   
     save
@@ -30,6 +34,7 @@ class Cat < ApplicationRecord
 
   def breeding
     self.offspring_count += 1 # 繁殖回数を増やす
+    self.bred_at_level_3 = true # フラグをここで設定
     save
   end
 
