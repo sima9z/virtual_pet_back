@@ -75,8 +75,8 @@ class CatsController < ApplicationController
     @cat.physical = [@cat.physical, 0].max
 
     # 遊び回数のカウントと最終遊び日時の更新
-    @dog.play_count += 1
-    @dog.last_played_at = Time.current
+    @cat.play_count += 1
+    @cat.last_played_at = Time.current
 
     # レベルアップと繁殖のフラグを設定
     level_up = @cat.level > previous_level
