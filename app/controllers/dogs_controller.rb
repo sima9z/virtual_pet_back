@@ -55,10 +55,27 @@ class DogsController < ApplicationController
       return
     end
 
+    # 日をまたいだらフラグとプレイカウントをリセット
+    if @dog.last_played_at.present? && @dog.last_played_at.to_date != Date.current
+      @dog.bad_status_flag = false
+      @dog.play_count = 0
+    end
+
+    if @dog.bad_status_flag
+      if @dog.play_count >= 3
+        render json: { error: '今日はもう十分遊びました。また明日遊びましょう。' }, status: :unprocessable_entity
+        return
+      end
+    end
+
     previous_level = @dog.level
     @dog.gain_experience(15)
     @dog.physical -= 3
     @dog.physical = [@dog.physical, 0].max
+
+    # 遊び回数のカウントと最終遊び日時の更新
+    @dog.play_count += 1
+    @dog.last_played_at = Time.current
 
     # レベルアップと繁殖のフラグを設定
     level_up = @dog.level > previous_level
