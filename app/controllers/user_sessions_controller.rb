@@ -61,8 +61,8 @@ class UserSessionsController < ApplicationController
   end
   
   def calculate_stat_decrease(elapsed_time)
-    # 幸福度と満腹度の減少計算 (10分ごとに1減少)
-    (elapsed_time / 10.minutes).floor
+    # 幸福度と満腹度の減少計算 (20分ごとに1減少)
+    (elapsed_time / 20.minutes).floor
   end
 
 end

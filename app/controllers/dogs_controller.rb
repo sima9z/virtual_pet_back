@@ -9,7 +9,7 @@ class DogsController < ApplicationController
       return
     end
 
-    @dog.satiety += 50
+    @dog.satiety += 100
     @dog.satiety = [@dog.satiety, @dog.max_satiety].min
     @dog.last_feed_at = Time.current # 最後にご飯をあげた時間を記録
     @dog.update_states
@@ -25,7 +25,7 @@ class DogsController < ApplicationController
       return
     end
 
-    @dog.happiness += 50
+    @dog.happiness += 100
     @dog.happiness = [@dog.happiness, @dog.max_happiness].min
     @dog.last_stroke_at = Time.current # 最後になでた時間
     @dog.update_states
@@ -35,7 +35,7 @@ class DogsController < ApplicationController
   end
 
   def play
-    if @dog.physical < 3
+    if @dog.physical < 10
       render json: { error: '疲れているようです。休ませてあげましょう' }, status: :unprocessable_entity
       return
     end
@@ -70,8 +70,8 @@ class DogsController < ApplicationController
 
     previous_level = @dog.level
     previous_offspring_born = @dog.offspring_count
-    @dog.gain_experience(15)
-    @dog.physical -= 3
+    @dog.gain_experience(50)
+    @dog.physical -= 10
     @dog.physical = [@dog.physical, 0].max
 
     # 遊び回数のカウントと最終遊び日時の更新
