@@ -9,7 +9,7 @@ class CatsController < ApplicationController
       return
     end
 
-    @cat.satiety += 50
+    @cat.satiety += 100
     @cat.satiety = [@cat.satiety, @cat.max_satiety].min
     @cat.last_feed_at = Time.current # 最後にご飯をあげた時間を記録
     @cat.update_states
@@ -25,7 +25,7 @@ class CatsController < ApplicationController
       return
     end
 
-    @cat.happiness += 50
+    @cat.happiness += 100
     @cat.happiness = [@cat.happiness, @cat.max_happiness].min
     @cat.last_stroke_at = Time.current # 最後になでた時間
     @cat.update_states
@@ -35,7 +35,7 @@ class CatsController < ApplicationController
   end
 
   def play
-    if @cat.physical < 3
+    if @cat.physical < 10
       render json: { error: '疲れているようです。休ませてあげましょう' }, status: :unprocessable_entity
       return
     end
@@ -70,8 +70,8 @@ class CatsController < ApplicationController
 
     previous_level = @cat.level
     previous_offspring_born = @cat.offspring_count
-    @cat.gain_experience(15)
-    @cat.physical -= 3
+    @cat.gain_experience(50)
+    @cat.physical -= 10
     @cat.physical = [@cat.physical, 0].max
 
     # 遊び回数のカウントと最終遊び日時の更新
