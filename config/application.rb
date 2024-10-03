@@ -1,6 +1,6 @@
 require_relative "boot"
 
-require_relative '../app/middleware/dynamic_cookie_middleware'
+# require_relative '../app/middleware/dynamic_cookie_middleware'
 
 require "rails/all"
 # Pick the frameworks you want:
@@ -43,7 +43,7 @@ module App
     config.i18n.available_locales = [:en, :ja]
 
     # カスタムミドルウェアを追加
-    config.middleware.use DynamicCookieMiddleware
+    # config.middleware.use DynamicCookieMiddleware
 
     # セッションミドルウェアの追加
     config.middleware.use ActionDispatch::Cookies
@@ -51,6 +51,7 @@ module App
       expire_after: 90.minutes,
       key: "_#{Rails.application.class.module_parent_name.downcase}_session",
       secure: ENV['SESSION_SECURE'] == 'true',  # 環境変数を参照
+      same_site: ENV['SESSION_SAME_SITE']&.to_sym || :lax,  # 環境変数を参照し、デフォルトは:lax
       httponly: true
     }
 
