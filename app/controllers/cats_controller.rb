@@ -70,7 +70,12 @@ class CatsController < ApplicationController
 
     previous_level = @cat.level
     previous_offspring_born = @cat.offspring_count
-    @cat.gain_experience(50)
+
+    # 獲得経験値をレベルに応じて動的に計算
+    base_experience = 50
+    experience_gain = base_experience * Math.sqrt(@cat.level) # レベルに応じた経験値を計算
+    @cat.gain_experience(experience_gain)
+
     @cat.physical -= 10
     @cat.physical = [@cat.physical, 0].max
 

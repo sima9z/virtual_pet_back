@@ -70,7 +70,12 @@ class DogsController < ApplicationController
 
     previous_level = @dog.level
     previous_offspring_born = @dog.offspring_count
-    @dog.gain_experience(50)
+
+    # 獲得経験値をレベルに応じて動的に計算
+    base_experience = 50
+    experience_gain = base_experience * Math.sqrt(@dog.level) # レベルに応じた経験値を計算
+    @dog.gain_experience(experience_gain)
+    
     @dog.physical -= 10
     @dog.physical = [@dog.physical, 0].max
 
