@@ -6,7 +6,7 @@ class Cat < ApplicationRecord
   COOLDOWN_TIME = 60.minutes
 
   def level_up_experience
-    100 * level ** 1.5
+    100 * level ** 1.6
   end
 
   def gain_experience(amount)
